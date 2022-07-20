@@ -41,8 +41,10 @@
         "psr-4": {
             "App\\": "app/"
         },
-
-        "files":["vendor/ar-php/ar-php/I18N/Arabic.php"],
+        "files": [
+            "app/Helpers.php",
+            "vendor/ar-php/ar-php/I18N/Arabic.php"
+        ],
         "classmap": [
             "database/seeds",
             "database/factories"

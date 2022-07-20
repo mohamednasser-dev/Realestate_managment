@@ -41,11 +41,15 @@ class MainClientController extends Controller
                 'name' => 'required',
                 'id_num' => 'required',
                 'address' => 'required',
+                'email' => 'required|unique:main_clients,email',
+                'image' => 'nullable|image|mimes:png,jpg,jpeg',
                 'type' => 'required|in:0,1',
-                'phone' => 'required|unique:main_clients|regex:/(9665)[0-9]{7}/',
+                'phone' => 'required|unique:main_clients,phone|regex:/(9665)[0-9]{7}/',
             ]
         );
-
+        if($request->image){
+            $data['image'] = uploadFileWithPath($request->file('image'), 'clients');
+        }
         MainClient::create($data);
         session()->flash('success', trans('admin.addedsuccess'));
         return redirect(url('mainclient'));

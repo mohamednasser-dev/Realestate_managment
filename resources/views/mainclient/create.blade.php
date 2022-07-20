@@ -33,10 +33,7 @@
 
             <div class="card m-b-20">
                 <div class="card-body">
-
-                    {{ Form::open( ['url' => ['mainclient'],'method'=>'post'] ) }}
-                    {{ csrf_field() }}
-
+                    {{ Form::open( ['url' => ['mainclient'],'method'=>'post', 'files'=>'true','enctype'=>"multipart/form-data"] ) }}
                     <div class="form-group row">
                         <label for="example-text-input" class="col-sm-3">{{trans('admin.mainclient_name')}}</label>
 
@@ -63,15 +60,29 @@
                     </div>
                     <div class="form-group row">
                         <label for="example-text-input" class="col-sm-3">{{trans('admin.phone')}}</label>
-
                         <div class="col-sm-9">
                             <input name="phone" class="form-control" type="number" value="{{old('phone')}}"
                                    placeholder="{{trans('admin.phone')}}" required>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="example-text-input" class="col-sm-3">النوع</label>
+                        <label for="example-text-input" class="col-sm-3">{{trans('admin.email')}}</label>
 
+                        <div class="col-sm-9">
+                            <input name="email" class="form-control" type="email" value="{{old('email')}}"
+                                   placeholder="{{trans('admin.email')}}" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="example-text-input" class="col-sm-3">{{trans('admin.client_image')}}</label>
+
+                        <div class="col-sm-9">
+                            <input name="image" class="form-control" type="file"  value="{{old('image')}}"
+                                   placeholder="{{trans('admin.client_image')}}" >
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="example-text-input" class="col-sm-3">النوع</label>
                         <div class="col-sm-4">
                             <input type="radio" id="ee" class="radio radio-inline" name="type" value="0" checked>
                             <label for="ee" class="col-sm-3">  <b>عميل</b>  </label>

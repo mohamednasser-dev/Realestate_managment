@@ -1,9 +1,10 @@
 <?php
 return [
+    'client_image' => 'صورة العميل',
     'Deligates' => 'المناديب',
     'createuser' => 'إضافة موظف',
     'Name' => 'الإسم',
-    'email' => 'البريد الالكترونى',
+    'email' => 'البريد الإلكتروني',
     'mobile' => 'رقم التلفون ',
     'deleteConfirmation' => 'هل انت متأكد؟',
     'Profile' => 'الصفحه الشخصية',
