@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\cpanel;
 
 use App\Http\Controllers\Controller;
+use Yajra\DataTables\Facades\DataTables;
 use App\MainClient;
 use Illuminate\Http\Request;
 
@@ -10,9 +11,57 @@ class MainClientController extends Controller
 {
     public function index()
     {
+        return view('mainclient.index');
+    }
 
-        $mainclients = MainClient::all();
-        return view('mainclient.index', \compact('mainclients'));
+    public function datatable(Request $request)
+    {
+
+        $data = MainClient::orderBy('id', 'desc');
+        return Datatables::of($data)
+            ->editColumn('checkbox', function ($row) {
+                $checkbox = '';
+                $checkbox .= '<div class="custom-control custom-checkbox">
+                                <input class="custom-control-input" type="checkbox" value="' . $row->id . '" name="check_delete{}" id="customControlInline' . $row->id . '">
+                                <label class="custom-control-label" for="customControlInline' . $row->id . '"></label>
+                            </div>';
+                return $checkbox;
+            })
+            ->editColumn('name', function ($row) {
+                $name = '';
+                $name .=  $row->name ;
+                return $name;
+            })
+            ->editColumn('phone', function ($row) {
+                $phone = '';
+                $phone .= $row->phone;
+                return $phone;
+            })->editColumn('type', function ($row) {
+                $type = '';
+                $type .=  $row->type;
+                return $type;
+            })
+            ->editColumn('address', function ($row) {
+                $address = '';
+                $address .= $row->address;
+                return $address;
+            })
+
+            ->editColumn('id_num', function ($row) {
+                $id_num = '';
+                $id_num .= $row->id_num;
+                return $id_num;
+            })
+
+            ->addColumn('actions', function ($row) {
+                $actions = '';
+                
+                $actions .= ' <a class="btn btn-raised btn-success btn-sml" href=" '.url('mainclient/'.$row->id.'/edit').'"><i class="fa fa-edit"></i></a>';
+                return $actions;
+
+            })
+            ->rawColumns(['actions', 'checkbox', 'name', 'phone', 'type', 'id_num', 'address'])
+            ->make();
 
     }
 
@@ -41,15 +90,11 @@ class MainClientController extends Controller
                 'name' => 'required',
                 'id_num' => 'required',
                 'address' => 'required',
-                'email' => 'required|unique:main_clients,email',
-                'image' => 'nullable|image|mimes:png,jpg,jpeg',
                 'type' => 'required|in:0,1',
-                'phone' => 'required|unique:main_clients,phone|regex:/(9665)[0-9]{7}/',
+                'phone' => 'required|unique:main_clients|regex:/(9665)[0-9]{7}/',
             ]
         );
-        if($request->image){
-            $data['image'] = uploadFileWithPath($request->file('image'), 'clients');
-        }
+
         MainClient::create($data);
         session()->flash('success', trans('admin.addedsuccess'));
         return redirect(url('mainclient'));

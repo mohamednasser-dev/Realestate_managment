@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html>
     <head>
-
-@php
-$main_data = App\MainData::first();
-@endphp
+        @php
+            $main_data = App\MainData::first();
+        @endphp
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
@@ -13,30 +12,30 @@ $main_data = App\MainData::first();
         <meta content="Themesbrand" name="author" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         @include('layouts.head')
+
+
     </head>
-    @if(session('lang')=='en')
-    <body >
-    @else
-    <body dir="rtl" >
+    <body class="fixed-left">
+        <!-- Loader -->
+        <div id="preloader"><div id="status"><div class="spinner"></div></div></div>
+        <div id="wrapper">
+            @if(session('lang') == 'en')
+            @include('layouts.header-en')
+            @else
+            @include('layouts.header')
+            @endif
 
-    @endif
-
-    <!-- Loader -->
-    <div id="preloader"><div id="status"><div class="spinner"></div></div></div>
-
-    <div id="wrapper">
-        @include('layouts.header')
-        <div class="wrapper">
-            <div class="container-fluid">
-                @yield('breadcrumb')
-                @yield('content')
+            <!-- Start right Content here -->
+            <div class="content-page">
+                <!-- Start content -->
+                <div class="content">
+                    @include('layouts.sidebar')
+                    @yield('content')
+                </div>
+                @include('layouts.footer')
             </div>
         </div>
-        @include('layouts.footer')
-    </div>
-    @include('layouts.footer-script')
-
-    @stack('js')
-
-</body>
+        @include('layouts.footer-script')
+    </body>
 </html>
+

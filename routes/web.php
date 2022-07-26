@@ -148,6 +148,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     //Main Client
     Route::resource('mainclient', 'cpanel\MainClientController');
+    Route::get('mainclient-list', 'cpanel\MainClientController@datatable')->name('cpanel.datatable.data');
     Route::get('mainclient/{id}/delete', 'cpanel\MainClientController@destroy');
 });
 
